@@ -11,7 +11,7 @@ jobs:
   check-conventions:
     runs-on: ubuntu-latest
     env:
-      GH_TOKEN: ${{ secrets.CTF_FLAG_L2 }}
+      GH_TOKEN: ${{ secrets.GH_REVIEW_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -21,8 +21,9 @@ jobs:
           cache: 'npm'
 
       - name: Validate branch naming
+        env:
+          BRANCH: ${{ github.head_ref }}
         run: |
-          BRANCH="${{ github.head_ref }}"
           echo "Checking branch: $BRANCH"
 
           # Enforce branch naming: feature/*, fix/*, chore/*
@@ -42,7 +43,7 @@ jobs:
 
       - name: Check file changes
         run: |
-          echo "PR opened by ${{ github.actor }} from ${{ github.head_ref }} → ${{ github.base_ref }}"
+          echo "PR opened by ${{ github.actor }}"
           echo "Merge commit: ${{ github.sha }}"
           # Use token to check changed files via API
           if [ -n "$GH_TOKEN" ]; then
