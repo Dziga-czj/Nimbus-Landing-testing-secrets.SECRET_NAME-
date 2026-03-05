@@ -12,7 +12,6 @@ permissions:
 jobs:
   deploy-staging:
     runs-on: ubuntu-latest
-    environment: staging
     steps:
       - uses: actions/checkout@v4
 
@@ -36,6 +35,5 @@ jobs:
             echo "::error::STAGING_DEPLOY_TOKEN not configured"
             exit 1
           fi
-          # Deploy build artifacts
           echo "Uploading dist/ to staging CDN..."
           echo "Deployment complete"
